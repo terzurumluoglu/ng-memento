@@ -37,7 +37,11 @@ const config: IConfig = {
   ],
 };
 
+
 export const appConfig: ApplicationConfig = {
-  providers: [...importProvidersFrom(NgMementoModule.forRoot(config))],
+  providers: [
+    ...,
+    importProvidersFrom(NgMementoModule.forRoot(config)),
+  ],
 };
 ```
