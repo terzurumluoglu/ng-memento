@@ -41,7 +41,9 @@ const config: IConfig = {
 export const appConfig: ApplicationConfig = {
   providers: [
     ...,
-    importProvidersFrom(NgMementoModule.forRoot(config)),
+    importProvidersFrom(
+      NgMementoModule.forRoot(config)
+    ),
   ],
 };
 ```
