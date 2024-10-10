@@ -1,6 +1,6 @@
 import { IMethodPath } from "./IMethodPath";
 
-export interface IConfig {
+export interface IMementoConfig {
   expireTimeAsMilliSeconds: number;
   paths: IMethodPath[];
 }

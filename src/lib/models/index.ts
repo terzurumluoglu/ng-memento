@@ -1,2 +1,2 @@
 export * from "./ICache";
-export * from "./IConfig";
+export * from "./IMementoConfig";
