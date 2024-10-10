@@ -1,53 +1,65 @@
-export const isDeepEqual = (
-  current: any,
-  target: any,
-  seen: Set<any> = new Set()
-): boolean => {
-  // Eğer aynı referanssa, doğrudan true döndür
-  if (current === target) return true;
+export const isDeepEqual = (current: any, target: any): boolean => {
+  if (current === target) {
+    return true;
+  }
 
-  // Eğer biri null ya da diğeri bir nesne değilse, false döndür
-  if (
-    current == null ||
-    target == null ||
-    typeof current !== "object" ||
-    typeof target !== "object"
-  ) {
+  if ([current, target].some((ct) => ct === null || typeof ct !== "object")) {
     return false;
   }
 
-  // Döngüsel referansları kontrol et
-  if (seen.has(current) || seen.has(target)) {
-    return false;
-  }
-  seen.add(current);
-  seen.add(target);
+  if (Array.isArray(current) && Array.isArray(target)) {
+    if (current.length !== target.length) {
+      return false;
+    }
 
-  // Array kontrolü
-  const currentIsArray = Array.isArray(current);
-  const targetIsArray = Array.isArray(target);
-  if (currentIsArray !== targetIsArray) {
-    return false;
+    const sortedCurrent = [...current].sort();
+    const sortedTarget = [...target].sort();
+
+    return sortedCurrent.every((item, index) =>
+      isDeepEqual(item, sortedTarget[index])
+    );
   }
 
-  // Anahtarları al
+  if (current instanceof Map && target instanceof Map) {
+    if (current.size !== target.size) {
+      return false;
+    }
+    for (const [key, value] of current) {
+      if (!target.has(key) || !isDeepEqual(value, target.get(key))) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  if (current instanceof Set && target instanceof Set) {
+    if (current.size !== target.size) {
+      return false;
+    }
+    for (const item of current) {
+      if (!target.has(item)) {
+        return false;
+      }
+    }
+    return true;
+  }
+
   const currentKeys = Object.keys(current);
   const targetKeys = Object.keys(target);
 
-  // Anahtar uzunlukları eşit değilse, false döndür
   if (currentKeys.length !== targetKeys.length) {
     return false;
   }
 
-  // Anahtarlar üzerinde döngü
   for (const key of currentKeys) {
-    // Anahtarın target'da olup olmadığını kontrol et
-    if (!target.hasOwnProperty(key)) {
+    if (!(key in target)) {
       return false;
     }
 
-    // Derin eşitlik kontrolü
-    if (!isDeepEqual(current[key], target[key], seen)) {
+    const val1 = (current as Record<string, unknown>)[key];
+    const val2 = (target as Record<string, unknown>)[key];
+
+    if (!isDeepEqual(val1, val2)) {
       return false;
     }
   }
