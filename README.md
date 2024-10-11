@@ -18,6 +18,12 @@ npm i ng-memento --save
 
 Coming Soon
 
+## Stable Versions Each Other
+
+| Angular version | ng-memento version |
+| :-------------- | :----------------- |
+| `v17.x.x`       | `v7.x.x`           |
+
 ## How can I use?
 
 ```typescript
@@ -25,6 +31,8 @@ import { NgMementoModule } from "ng-memento";
 
 const config: IMementoConfig = {
   expireTimeAsMilliSeconds: 60 * 60 * 1000,
+  store: 'local',
+  storeKey: 'MEMENTO_KEY'
   paths: [
     {
       method: ["GET", "POST"],
@@ -47,3 +55,12 @@ export const appConfig: ApplicationConfig = {
   ],
 };
 ```
+
+## IMementoConfig
+
+| property                   | type                       | default       | required | description                                      |
+| :------------------------- | :------------------------- | :------------ | :------- | :----------------------------------------------- |
+| `expireTimeAsMilliSeconds` | `number`                   |               | ✓        | cached data stored time                          |
+| `paths`                    | `IMethodPath`              |               | ✓        | paths and methods                                |
+| `store`                    | `none`, `local`, `session` | `none`        | x        | none: cached data stored lives only next refresh |
+| `storeKey`                 | `string`                   | `MEMENTO_KEY` | x        | key that stores data if chose local or session   |
