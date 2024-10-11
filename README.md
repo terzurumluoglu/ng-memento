@@ -1,49 +1,24 @@
 # NgMemento
 
-it's unstable yet. Stable version will be released soon.
+This library was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.2.0.
 
-ng-memento makes your application to be faster by preventing the same http requests from being called again in your Angular project.
+## Code scaffolding
 
-## Angular17
+Run `ng generate component component-name --project ng-memento` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module --project ng-memento`.
+> Note: Don't forget to add `--project ng-memento` or else it will be added to the default project in your `angular.json` file. 
 
-Unfortunately, it only supports Angular v17 yet.
+## Build
 
-## Installation
+Run `ng build ng-memento` to build the project. The build artifacts will be stored in the `dist/` directory.
 
-```bash
-npm i ng-memento --save
-```
+## Publishing
 
-## Demo
+After building your library with `ng build ng-memento`, go to the dist folder `cd dist/ng-memento` and run `npm publish`.
 
-Coming Soon
+## Running unit tests
 
-## How can I use?
+Run `ng test ng-memento` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
-```typescript
-import { NgMementoModule } from "ng-memento";
+## Further help
 
-const config: IMementoConfig = {
-  expireTimeAsMilliSeconds: 60 * 60 * 1000,
-  paths: [
-    {
-      method: ["GET", "POST"],
-      path: "users/*",
-    },
-    {
-      method: ["GET"],
-      path: "comments",
-    },
-  ],
-};
-
-
-export const appConfig: ApplicationConfig = {
-  providers: [
-    ...,
-    importProvidersFrom(
-      NgMementoModule.forRoot(config)
-    ),
-  ],
-};
-```
+To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.

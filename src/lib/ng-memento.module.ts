@@ -1,14 +1,20 @@
 import { ModuleWithProviders, NgModule } from "@angular/core";
-import { provideHttpClient, withInterceptors } from "@angular/common/http";
-import { mementoInterceptor } from "./helpers";
 import { IMementoConfig } from "./models";
 import { MEMENTO_CONFIG } from "./config";
+import { HTTP_INTERCEPTORS } from "@angular/common/http";
+import { MementoInterceptor } from "./helpers";
 
 @NgModule({
   declarations: [],
   imports: [],
-  providers: [provideHttpClient(withInterceptors([mementoInterceptor]))],
   exports: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: MementoInterceptor,
+      multi: true,
+    },
+  ],
 })
 export class NgMementoModule {
   static forRoot(config: IMementoConfig): ModuleWithProviders<NgMementoModule> {
