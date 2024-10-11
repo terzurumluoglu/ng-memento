@@ -5,9 +5,6 @@ import { HTTP_INTERCEPTORS } from "@angular/common/http";
 import { MementoInterceptor } from "./helpers";
 
 @NgModule({
-  declarations: [],
-  imports: [],
-  exports: [],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
