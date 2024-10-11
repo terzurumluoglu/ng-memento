@@ -1,7 +1,7 @@
 import { HttpResponse } from "@angular/common/http";
 import { Inject, Injectable } from "@angular/core";
 import { MEMENTO_CONFIG } from "./config";
-import { ICache, IConfig } from "./models";
+import { ICache, IMementoConfig } from "./models";
 import { findCacheIndex } from "./utils";
 
 @Injectable({
@@ -10,7 +10,9 @@ import { findCacheIndex } from "./utils";
 export class NgMementoService {
   #caches: ICache[] = [];
 
-  constructor(@Inject(MEMENTO_CONFIG) private readonly config: IConfig) {}
+  constructor(
+    @Inject(MEMENTO_CONFIG) private readonly config: IMementoConfig
+  ) {}
 
   #delete = (index: number) => {
     this.#caches.splice(index, 1);
