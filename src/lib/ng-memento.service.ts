@@ -1,21 +1,36 @@
 import { HttpResponse } from "@angular/common/http";
-import { Inject, Injectable } from "@angular/core";
-import { MEMENTO_CONFIG } from "./config";
+import { Inject, Injectable, PLATFORM_ID } from "@angular/core";
 import { ICache, IMementoConfig } from "./models";
 import { findCacheIndex } from "./utils";
+import { KEYS } from "./enums";
+import { deleteCacheData, getCacheData, setCacheData } from "./utils/store";
+import { MEMENTO_CONFIG } from "./config";
+import { isPlatformBrowser } from "@angular/common";
 
 @Injectable({
   providedIn: "root",
 })
 export class NgMementoService {
-  #caches: ICache[] = [];
+  #caches: ICache[];
 
   constructor(
+    @Inject(PLATFORM_ID) private platformId: any,
     @Inject(MEMENTO_CONFIG) private readonly config: IMementoConfig
-  ) {}
+  ) {
+    if (!this.config.store || !isPlatformBrowser(this.platformId)) {
+      this.config.store = "none";
+    }
+
+    if (!this.config.storeKey) {
+      this.config.storeKey = KEYS.STORE;
+    }
+
+    this.#caches = getCacheData(config);
+  }
 
   #delete = (index: number) => {
     this.#caches.splice(index, 1);
+    deleteCacheData(this.config);
   };
 
   get = (cachingData: {
@@ -52,5 +67,9 @@ export class NgMementoService {
       expiredDate,
     };
     this.#caches = [...this.#caches, cache];
+    if (this.config.store === "none" || !isPlatformBrowser(this.platformId)) {
+      return;
+    }
+    setCacheData(this.config, this.#caches);
   };
 }
