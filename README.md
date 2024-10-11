@@ -2,7 +2,7 @@
 
 it's unstable yet. Stable version will be released soon.
 
-ng-memento helps your application to be faster by preventing the same http requests from being called again in your Angular project.
+ng-memento makes your application to be faster by preventing the same http requests from being called again in your Angular project.
 
 ## Angular17
 
@@ -23,7 +23,7 @@ Coming Soon
 ```typescript
 import { NgMementoModule } from "ng-memento";
 
-const config: IConfig = {
+const config: IMementoConfig = {
   expireTimeAsMilliSeconds: 60 * 60 * 1000,
   paths: [
     {
