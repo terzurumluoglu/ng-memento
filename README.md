@@ -1,12 +1,12 @@
 # NgMemento
 
-it's unstable yet. Stable version will be released soon.
-
 ng-memento makes your application to be faster by preventing the same http requests from being called again in your Angular project.
 
 ## Angular17
 
-Unfortunately, it only supports Angular v17 yet.
+it's stable for Angular version 17 yet.
+
+It will be supported v14+ soon.
 
 ## Installation
 
