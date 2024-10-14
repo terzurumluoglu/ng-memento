@@ -1,6 +1,6 @@
-export type method = "GET" | "POST" | "PUT" | "PATCH";
+import { methodType } from "../types";
 
 export interface IMethodPath {
-  method: method[];
+  methods: methodType[];
   path: string;
 }
