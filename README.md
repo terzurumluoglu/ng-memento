@@ -1,24 +1,103 @@
 # NgMemento
 
-This library was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.2.0.
+ng-memento makes your application to be faster by preventing the same http requests from being called again in your Angular project.
 
-## Code scaffolding
+## Angular17
 
-Run `ng generate component component-name --project ng-memento` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module --project ng-memento`.
-> Note: Don't forget to add `--project ng-memento` or else it will be added to the default project in your `angular.json` file. 
+it's stable for Angular version 17 yet.
 
-## Build
+It will be supported v14+ soon.
 
-Run `ng build ng-memento` to build the project. The build artifacts will be stored in the `dist/` directory.
+## Installation
 
-## Publishing
+```bash
+npm i ng-memento --save
+```
 
-After building your library with `ng build ng-memento`, go to the dist folder `cd dist/ng-memento` and run `npm publish`.
+## Demo
 
-## Running unit tests
+The application was built by using this library? [Visit](https://ng-memento-web.onrender.com/users)
 
-Run `ng test ng-memento` to execute the unit tests via [Karma](https://karma-runner.github.io).
+![til](https://ng-memento-web.onrender.com/assets/demo.gif)
 
-## Further help
+## Stable Versions
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+| Angular version | ng-memento version |
+| :-------------- | :----------------- |
+| `v14.x.x`       | `v4.x.x`           |
+| `v15.x.x`       | `v5.x.x`           |
+| `v16.x.x`       | `v6.x.x`           |
+| `v17.x.x`       | `v7.x.x`           |
+| `v18.x.x`       | `v8.x.x`           |
+
+## How can I use?
+
+```typescript
+import { NgMementoModule, IMementoConfig } from "ng-memento";
+
+const config: IMementoConfig = {
+  expireTimeAsMilliSeconds: 60 * 60 * 1000,
+  store: 'local',
+  storeKey: 'MEMENTO_KEY'
+  paths: [
+    {
+      method: ["GET", "POST"],
+      path: "users/*",
+    },
+    {
+      method: ["GET"],
+      path: "posts",
+    },
+  ],
+};
+
+/* MODULE-BASED ARCHITECTURE */
+@NgModule({
+  declarations: [],
+  imports: [
+    ...,
+    NgMementoModule.forRoot(config),
+  ],
+  providers: [],
+  bootstrap: [],
+})
+export class AppModule {}
+
+/* STANDALONE ARCHITECTURE */
+export const appConfig: ApplicationConfig = {
+  providers: [
+    ...,
+    importProvidersFrom(
+      NgMementoModule.forRoot(config),
+    ),
+  ],
+};
+```
+
+## Documentation
+
+#### IMementoConfig
+
+| property                   | type                       | default       | required | description                                      |
+| :------------------------- | :------------------------- | :------------ | :------- | :----------------------------------------------- |
+| `expireTimeAsMilliSeconds` | `number`                   |               | ✓        | cached data stored time                          |
+| `paths`                    | `IMethodPath`              |               | ✓        |
+| `store`                    | `none`, `local`, `session` | `none`        | x        | none: cached data stored lives only next refresh |
+| `storeKey`                 | `string`                   | `MEMENTO_KEY` | x        | key that stores data if chose local or session   |
+
+#### IMethodPath
+
+| property  | type         | default | required | description                                                                  |
+| :-------- | :----------- | :------ | :------- | :--------------------------------------------------------------------------- |
+| `methods` | `methodType` |         | ✓        | methods to be cached                                                         |
+| `path`    | `string`     |         | ✓        | path to be cached **(if path ends with '/\*' all sub paths will be cached)** |
+
+#### methodType
+
+| property     | type                            | default | required | description          |
+| :----------- | :------------------------------ | :------ | :------- | :------------------- |
+| `methodType` | `"GET", "POST", "PUT", "PATCH"` |         | ✓        | methods to be cached |
+
+## Important
+
+**You should use methodType carefully. You send same header, body, params and path when you use POST, PUT and PATCH method, ng-memento will prevent the request therefore the data will not affect.**
