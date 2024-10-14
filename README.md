@@ -2,12 +2,6 @@
 
 ng-memento makes your application to be faster by preventing the same http requests from being called again in your Angular project.
 
-## Angular17
-
-it's stable for Angular version 17 yet.
-
-It will be supported v14+ soon.
-
 ## Installation
 
 ```bash
@@ -16,7 +10,11 @@ npm i ng-memento --save
 
 ## Demo
 
+### Example
+
 The application was built by using this library? [Visit](https://ng-memento-web.onrender.com/users)
+
+### Image
 
 ![til](https://ng-memento-web.onrender.com/assets/demo.gif)
 
@@ -30,7 +28,9 @@ The application was built by using this library? [Visit](https://ng-memento-web.
 | `v17.x.x`       | `v7.x.x`           |
 | `v18.x.x`       | `v8.x.x`           |
 
-## How can I use?
+## Documentation
+
+### How can I use?
 
 ```typescript
 import { NgMementoModule, IMementoConfig } from "ng-memento";
@@ -74,7 +74,7 @@ export const appConfig: ApplicationConfig = {
 };
 ```
 
-## Documentation
+### Types
 
 #### IMementoConfig
 
@@ -98,6 +98,6 @@ export const appConfig: ApplicationConfig = {
 | :----------- | :------------------------------ | :------ | :------- | :------------------- |
 | `methodType` | `"GET", "POST", "PUT", "PATCH"` |         | ✓        | methods to be cached |
 
-## Important
+### Important
 
 **You should use methodType carefully. You send same header, body, params and path when you use POST, PUT and PATCH method, ng-memento will prevent the request therefore the data will not affect.**
