@@ -5,10 +5,7 @@ import { IMementoConfig } from "./models";
 import { MEMENTO_CONFIG } from "./config";
 
 @NgModule({
-  declarations: [],
-  imports: [],
   providers: [provideHttpClient(withInterceptors([mementoInterceptor]))],
-  exports: [],
 })
 export class NgMementoModule {
   static forRoot(config: IMementoConfig): ModuleWithProviders<NgMementoModule> {
