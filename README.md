@@ -1,6 +1,6 @@
 # NgMemento
 
-ng-memento makes your application to be faster by preventing the same http requests from being called again in your Angular project.
+ng-memento makes your application faster by preventing the same http requests from being called again in your Angular project.
 
 ## Installation
 
@@ -12,7 +12,7 @@ npm i ng-memento --save
 
 ### Example
 
-The application was built by using this library? [Visit](https://ng-memento-web.onrender.com/users)
+The application was built by using this library. [Visit](https://ng-memento-web.onrender.com/users)
 
 ### Image
 
