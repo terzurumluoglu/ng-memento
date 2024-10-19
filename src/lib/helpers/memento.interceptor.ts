@@ -11,6 +11,7 @@ import { MEMENTO_CONFIG } from "../config";
 import { IMementoConfig } from "../models";
 import { NgMementoService } from "../ng-memento.service";
 import { getHeaders, getParams } from "../utils";
+import { methodType } from "../types";
 
 @Injectable()
 export class MementoInterceptor implements HttpInterceptor {
@@ -23,6 +24,7 @@ export class MementoInterceptor implements HttpInterceptor {
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
     const { urlWithParams, body } = req;
+    const method = req.method as methodType;
 
     const { pathname, searchParams } = new URL(urlWithParams);
 
@@ -32,14 +34,16 @@ export class MementoInterceptor implements HttpInterceptor {
     const [, ...endPathName] = pathname.split("/");
     const path = endPathName.join("/");
 
-    const condition = this.config.paths.some((u) => {
-      if (u.path.endsWith("/*")) {
-        const [validPath] = u.path.split("/*");
-        return path.startsWith(validPath);
-      } else {
-        return path === u.path;
-      }
-    });
+    const condition = this.config.paths
+      .filter((p) => p.methods.includes(method))
+      .some((u) => {
+        if (u.path.endsWith("/*")) {
+          const [validPath] = u.path.split("/*");
+          return path.startsWith(validPath);
+        } else {
+          return path === u.path;
+        }
+      });
 
     if (!condition) {
       return next.handle(req);
