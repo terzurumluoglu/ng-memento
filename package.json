@@ -9,6 +9,9 @@
     "type": "git",
     "url": "git+https://github.com/terzurumluoglu/ng-memento.git"
   },
+  "bugs": {
+    "url": "https://github.com/terzurumluoglu/ng-memento/issues"
+  },
   "keywords": [
     "angular",
     "caching",
