@@ -9,6 +9,7 @@ import {
 import { MEMENTO_CONFIG } from "../config";
 import { NgMementoService } from "../ng-memento.service";
 import { getHeaders, getParams } from "../utils";
+import { methodType } from "../types";
 import { of, tap } from "rxjs";
 
 export const mementoInterceptor: HttpInterceptorFn = (
@@ -19,6 +20,7 @@ export const mementoInterceptor: HttpInterceptorFn = (
   const service = inject(NgMementoService);
 
   const { urlWithParams, body } = req;
+  const method = req.method as methodType;
 
   const { pathname, searchParams } = new URL(urlWithParams);
 
@@ -28,14 +30,16 @@ export const mementoInterceptor: HttpInterceptorFn = (
   const [, ...endPathName] = pathname.split("/");
   const path = endPathName.join("/");
 
-  const condition = config.paths.some((u) => {
-    if (u.path.endsWith("/*")) {
-      const [validPath] = u.path.split("/*");
-      return path.startsWith(validPath);
-    } else {
-      return path === u.path;
-    }
-  });
+  const condition = config.paths
+    .filter((p) => p.methods.includes(method))
+    .some((u) => {
+      if (u.path.endsWith("/*")) {
+        const [validPath] = u.path.split("/*");
+        return path.startsWith(validPath);
+      } else {
+        return path === u.path;
+      }
+    });
 
   if (!condition) {
     return next(req);
