@@ -4,7 +4,7 @@
   "description": "NG-MEMENTO makes your application to be faster by preventing the same http requests from being called again in your Angular project.",
   "author": "Toprak ERZURUMLUOĞLU <toprakerzurumluoglu@gmail.com>",
   "license": "MIT",
-  "homepage": "https://github.com/terzurumluoglu/ng-memento/blob/main/README.md",
+  "homepage": "https://github.com/terzurumluoglu/ng-memento#readme",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/terzurumluoglu/ng-memento.git"
