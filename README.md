@@ -1,6 +1,6 @@
 # NgMemento
 
-ng-memento makes your application to be faster by preventing the same http requests from being called again in your Angular project.
+ng-memento makes your application faster by preventing the same http requests from being called again in your Angular project.
 
 ## Installation
 
@@ -12,7 +12,7 @@ npm i ng-memento --save
 
 ### Example
 
-The application was built by using this library? [Visit](https://ng-memento-web.onrender.com/users)
+The application was built by using this library. [Visit](https://ng-memento-web.onrender.com/users)
 
 ### Image
 
@@ -22,6 +22,7 @@ The application was built by using this library? [Visit](https://ng-memento-web.
 
 | Angular version | ng-memento version |
 | :-------------- | :----------------- |
+| `v13.x.x`       | `v3.x.x`           |
 | `v14.x.x`       | `v4.x.x`           |
 | `v15.x.x`       | `v5.x.x`           |
 | `v16.x.x`       | `v6.x.x`           |
@@ -41,11 +42,11 @@ const config: IMementoConfig = {
   storeKey: 'MEMENTO_KEY'
   paths: [
     {
-      method: ["GET", "POST"],
+      methods: ["GET", "POST"],
       path: "users/*",
     },
     {
-      method: ["GET"],
+      methods: ["GET"],
       path: "posts",
     },
   ],
@@ -78,12 +79,12 @@ export const appConfig: ApplicationConfig = {
 
 #### IMementoConfig
 
-| property                   | type                       | default       | required | description                                      |
-| :------------------------- | :------------------------- | :------------ | :------- | :----------------------------------------------- |
-| `expireTimeAsMilliSeconds` | `number`                   |               | ✓        | cached data stored time                          |
+| property                   | type                       | default       | required | description                                            |
+| :------------------------- | :------------------------- | :------------ | :------- | :----------------------------------------------------- |
+| `expireTimeAsMilliSeconds` | `number`                   |               | ✓        | cached data stored time                                |
 | `paths`                    | `IMethodPath`              |               | ✓        |
-| `store`                    | `none`, `local`, `session` | `none`        | x        | none: cached data stored lives only next refresh |
-| `storeKey`                 | `string`                   | `MEMENTO_KEY` | x        | key that stores data if chose local or session   |
+| `store`                    | `none`, `local`, `session` | `none`        | x        | none: cached data stored lives only until next refresh |
+| `storeKey`                 | `string`                   | `MEMENTO_KEY` | x        | key that stores data if chose local or session         |
 
 #### IMethodPath
 
