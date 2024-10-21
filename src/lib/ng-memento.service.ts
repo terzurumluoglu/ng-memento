@@ -9,6 +9,7 @@ import {
 } from "./utils";
 import { KEYS } from "./enums";
 import { MEMENTO_CONFIG } from "./config";
+import { methodType } from "./types";
 
 @Injectable({
   providedIn: "root",
@@ -35,6 +36,7 @@ export class NgMementoService {
 
   get = (cachingData: {
     path: string;
+    method: methodType;
     params?: any;
     headers?: any;
     body?: any;
@@ -58,6 +60,7 @@ export class NgMementoService {
     headers?: any;
     params?: any;
     path: string;
+    method: methodType;
     response: HttpResponse<any>;
   }) => {
     const { expireTimeAsMilliSeconds } = this.config;
