@@ -44,7 +44,7 @@ export const mementoInterceptor: HttpInterceptorFn = (
   if (!condition) {
     return next(req);
   }
-  const cachedResponse = service.get({ path, params, headers, body });
+  const cachedResponse = service.get({ path, method, params, headers, body });
   if (!!cachedResponse) {
     return of(cachedResponse);
   }
@@ -54,6 +54,7 @@ export const mementoInterceptor: HttpInterceptorFn = (
       response instanceof HttpResponse &&
         service.set({
           path,
+          method,
           response,
           params,
           headers,
