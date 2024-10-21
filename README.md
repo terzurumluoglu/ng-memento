@@ -42,11 +42,11 @@ const config: IMementoConfig = {
   storeKey: 'MEMENTO_KEY'
   paths: [
     {
-      method: ["GET", "POST"],
+      methods: ["GET", "POST"],
       path: "users/*",
     },
     {
-      method: ["GET"],
+      methods: ["GET"],
       path: "posts",
     },
   ],
