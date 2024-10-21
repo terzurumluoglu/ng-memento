@@ -48,7 +48,13 @@ export class MementoInterceptor implements HttpInterceptor {
     if (!condition) {
       return next.handle(req);
     }
-    const cachedResponse = this.service.get({ path, params, headers, body });
+    const cachedResponse = this.service.get({
+      path,
+      method,
+      params,
+      headers,
+      body,
+    });
     if (!!cachedResponse) {
       return of(cachedResponse);
     }
@@ -58,6 +64,7 @@ export class MementoInterceptor implements HttpInterceptor {
         response instanceof HttpResponse &&
           this.service.set({
             path,
+            method,
             response,
             params,
             headers,
