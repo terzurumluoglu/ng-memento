@@ -11,7 +11,7 @@ import { MEMENTO_CONFIG } from "../config";
 import { IMementoConfig } from "../models";
 import { NgMementoService } from "../ng-memento.service";
 import { getHeaders, getParams } from "../utils";
-import { methodType } from "../types";
+import { MethodType } from "../types";
 
 @Injectable()
 export class MementoInterceptor implements HttpInterceptor {
@@ -24,7 +24,7 @@ export class MementoInterceptor implements HttpInterceptor {
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
     const { urlWithParams, body } = req;
-    const method = req.method as methodType;
+    const method = req.method as MethodType;
 
     const { pathname, searchParams } = new URL(urlWithParams);
 
