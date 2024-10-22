@@ -1,11 +1,11 @@
 import { HttpResponse } from "@angular/common/http";
-import { methodType } from "../types";
+import { MethodType } from "../types";
 
 export interface ICache {
   response: HttpResponse<any>;
   expiredDate: number;
   path: string;
-  method: methodType;
+  method: MethodType;
   params?: any;
   headers?: any;
   body?: any;
