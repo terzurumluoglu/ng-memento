@@ -90,15 +90,15 @@ export const appConfig: ApplicationConfig = {
 
 | property  | type         | default | required | description                                                                  |
 | :-------- | :----------- | :------ | :------- | :--------------------------------------------------------------------------- |
-| `methods` | `methodType` |         | ✓        | methods to be cached                                                         |
+| `methods` | `MethodType` |         | ✓        | methods to be cached                                                         |
 | `path`    | `string`     |         | ✓        | path to be cached **(if path ends with '/\*' all sub paths will be cached)** |
 
-#### methodType
+#### MethodType
 
 | property     | type                            | default | required | description          |
 | :----------- | :------------------------------ | :------ | :------- | :------------------- |
-| `methodType` | `"GET", "POST", "PUT", "PATCH"` |         | ✓        | methods to be cached |
+| `MethodType` | `"GET", "POST", "PUT", "PATCH"` |         | ✓        | methods to be cached |
 
 ### Important
 
-**You should use methodType carefully. You send same header, body, params and path when you use POST, PUT and PATCH method, ng-memento will prevent the request therefore the data will not affect.**
+**You should use MethodType carefully. You send same header, body, params and path when you use POST, PUT and PATCH method, ng-memento will prevent the request therefore the data will not affect.**
