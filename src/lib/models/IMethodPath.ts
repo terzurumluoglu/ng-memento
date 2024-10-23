@@ -1,6 +1,6 @@
-import { methodType } from "../types";
+import { MethodType } from "../types";
 
 export interface IMethodPath {
-  methods: methodType[];
+  methods: MethodType[];
   path: string;
 }

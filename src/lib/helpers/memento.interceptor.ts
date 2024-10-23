@@ -9,7 +9,7 @@ import {
 import { MEMENTO_CONFIG } from "../config";
 import { NgMementoService } from "../ng-memento.service";
 import { getHeaders, getParams } from "../utils";
-import { methodType } from "../types";
+import { MethodType } from "../types";
 import { of, tap } from "rxjs";
 
 export const mementoInterceptor: HttpInterceptorFn = (
@@ -20,7 +20,7 @@ export const mementoInterceptor: HttpInterceptorFn = (
   const service = inject(NgMementoService);
 
   const { urlWithParams, body } = req;
-  const method = req.method as methodType;
+  const method = req.method as MethodType;
 
   const { pathname, searchParams } = new URL(urlWithParams);
 
