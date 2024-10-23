@@ -1,1 +1,1 @@
-export type storeType = "local" | "session" | "none";
+export type StoreType = "local" | "session" | "none";
