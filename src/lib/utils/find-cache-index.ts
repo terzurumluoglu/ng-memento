@@ -1,5 +1,5 @@
-import { ICache } from "../models";
-import { MethodType } from "../types";
+import { type ICache } from "../models";
+import { type MethodType } from "../types";
 import { isDeepEqual } from "./is-deep-equal";
 
 export const findCacheIndex = (
