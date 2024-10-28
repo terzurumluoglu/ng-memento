@@ -1,9 +1,9 @@
-import { type ICache } from "../models";
+import { type ICacheStore } from "../models";
 import { type MethodType } from "../types";
 import { isDeepEqual } from "./is-deep-equal";
 
 export const findCacheIndex = (
-  caches: ICache[],
+  caches: ICacheStore[],
   obj: {
     path: string;
     method: MethodType;
