@@ -1,22 +1,21 @@
 import { Inject, Injectable } from "@angular/core";
 import {
-  HttpInterceptor,
-  HttpEvent,
-  HttpHandler,
-  HttpRequest,
+  type HttpInterceptor,
+  type HttpEvent,
+  type HttpHandler,
+  type HttpRequest,
   HttpResponse,
 } from "@angular/common/http";
-import { Observable, of, tap } from "rxjs";
+import { type Observable, of, tap } from "rxjs";
 import { MEMENTO_CONFIG } from "../config";
-import { IMementoConfig } from "../models";
 import { NgMementoService } from "../ng-memento.service";
 import { getHeaders, getParams } from "../utils";
-import { MethodType } from "../types";
+import { type MementoConfig, type MethodType } from "../types";
 
 @Injectable()
 export class MementoInterceptor implements HttpInterceptor {
   constructor(
-    @Inject(MEMENTO_CONFIG) private readonly config: IMementoConfig,
+    @Inject(MEMENTO_CONFIG) private readonly configs: MementoConfig[],
     private readonly service: NgMementoService
   ) {}
   intercept(
@@ -34,14 +33,14 @@ export class MementoInterceptor implements HttpInterceptor {
     const [, ...endPathName] = pathname.split("/");
     const path = endPathName.join("/");
 
-    const condition = this.config.paths
-      .filter((p) => p.methods.includes(method))
-      .some((u) => {
-        if (u.path.endsWith("/*")) {
-          const [validPath] = u.path.split("/*");
+    const condition = this.configs
+      .filter((config) => config.methods.includes(method))
+      .some((config) => {
+        if (config.path.endsWith("/*")) {
+          const [validPath] = config.path.split("/*");
           return path.startsWith(validPath);
         } else {
-          return path === u.path;
+          return path === config.path;
         }
       });
 
