@@ -18,7 +18,14 @@ export class NgMementoModule {
     const expireTimeAsMilliSeconds = config.expireTimeAsMilliSeconds || 0;
     const store: StoreType = config.store || "none";
     const storeKey: string = config.storeKey || KEYS.STORE;
-    return config.paths
+
+    const { paths } = config;
+
+    if (!paths) {
+      throw new Error("Cannot read property of IMementoConfig: 'paths'");
+    }
+
+    return paths
       .map((p) => {
         return {
           expireTimeAsMilliSeconds:
