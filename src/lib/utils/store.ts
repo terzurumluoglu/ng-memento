@@ -1,5 +1,5 @@
 import { HttpResponse } from "@angular/common/http";
-import { ICacheStore, type ICache } from "../models";
+import { type ICacheStore, type ICache } from "../models";
 import { isJsonString } from "./is-json-string";
 import { type StoreType } from "../types";
 import { type MementoConfig } from "../types/memento-config.type";
