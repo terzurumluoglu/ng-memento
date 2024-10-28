@@ -96,8 +96,8 @@ export const appConfig: ApplicationConfig = {
 
 | property                   | type                       | default       | required | description                                            |
 | :------------------------- | :------------------------- | :------------ | :------- | :----------------------------------------------------- |
-| `expireTimeAsMilliSeconds` | `number`                   |               | ✓        | cached data stored time                                |
-| `paths`                    | `IMethodPath`              |               | ✓        |
+| `expireTimeAsMilliSeconds` | `number`                   | 0             | x        | cached data stored time                                |
+| `paths`                    | `IMethodPath`              |               | ✓        |                                                        |
 | `store`                    | `none`, `local`, `session` | `none`        | x        | none: cached data stored lives only until next refresh |
 | `storeKey`                 | `string`                   | `MEMENTO_KEY` | x        | key that stores data if chose local or session         |
 
