@@ -1,6 +1,6 @@
 {
   "name": "ng-memento",
-  "version": "3.0.2",
+  "version": "3.1.0",
   "description": "NG-MEMENTO makes your application to be faster by preventing the same http requests from being called again in your Angular project.",
   "author": "Toprak ERZURUMLUOĞLU <toprakerzurumluoglu@gmail.com>",
   "license": "MIT",
