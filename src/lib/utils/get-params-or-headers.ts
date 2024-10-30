@@ -1,4 +1,4 @@
-import { HttpHeaders } from "@angular/common/http";
+import { type HttpHeaders } from "@angular/common/http";
 
 export const getParams = (params: URLSearchParams) =>
   getParamsOrHeaders(params);
