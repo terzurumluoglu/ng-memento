@@ -15,6 +15,7 @@ interface ICachingDataGET {
 }
 
 interface ICachingDataSET extends ICachingDataGET {
+  config: MementoConfig;
   response: HttpResponse<any>;
 }
 
@@ -52,22 +53,15 @@ export class NgMementoService {
   };
 
   set = (cachingData: ICachingDataSET) => {
-    const { path } = cachingData;
-
-    const config: MementoConfig | undefined = this.configs.find(
-      (config) => config.path === path
-    );
-
-    if (!config) {
-      return;
-    }
-
-    const { expireTimeAsMilliSeconds, store, storeKey } = config;
+    const {
+      config: { expireTimeAsMilliSeconds, store, storeKey },
+      ...withoutConfig
+    } = cachingData;
 
     const expiredDate: number = Date.now() + expireTimeAsMilliSeconds;
 
     const cache: ICacheStore = {
-      ...cachingData,
+      ...withoutConfig,
       expiredDate,
       store,
       storeKey,

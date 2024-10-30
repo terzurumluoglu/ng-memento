@@ -33,9 +33,9 @@ export class MementoInterceptor implements HttpInterceptor {
     const [, ...endPathName] = pathname.split("/");
     const path = endPathName.join("/");
 
-    const condition = this.configs
+    const config = this.configs
       .filter((config) => config.methods.includes(method))
-      .some((config) => {
+      .find((config) => {
         if (config.path.endsWith("/*")) {
           const [validPath] = config.path.split("/*");
           return path.startsWith(validPath);
@@ -44,7 +44,7 @@ export class MementoInterceptor implements HttpInterceptor {
         }
       });
 
-    if (!condition) {
+    if (!config) {
       return next.handle(req);
     }
     const cachedResponse = this.service.get({
@@ -62,6 +62,7 @@ export class MementoInterceptor implements HttpInterceptor {
       tap((response) => {
         response instanceof HttpResponse &&
           this.service.set({
+            config,
             path,
             method,
             response,
