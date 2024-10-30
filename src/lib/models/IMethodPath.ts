@@ -1,6 +1,9 @@
-import { methodType } from "../types";
+import { type MethodType, type StoreType } from "../types";
 
 export interface IMethodPath {
-  methods: methodType[];
+  expireTimeAsMilliSeconds?: number;
+  methods: MethodType[];
   path: string;
+  store?: StoreType;
+  storeKey?: string;
 }

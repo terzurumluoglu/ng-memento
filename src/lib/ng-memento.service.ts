@@ -1,78 +1,88 @@
-import { HttpResponse } from "@angular/common/http";
+import { type HttpResponse } from "@angular/common/http";
 import { Inject, Injectable, PLATFORM_ID } from "@angular/core";
-import { ICache, IMementoConfig } from "./models";
-import { findCacheIndex } from "./utils";
-import { KEYS } from "./enums";
-import { deleteCacheData, getCacheData, setCacheData } from "./utils/store";
+import { type ICacheStore } from "./models";
+import { findCacheIndex, getCacheData, setCacheData } from "./utils";
 import { MEMENTO_CONFIG } from "./config";
 import { isPlatformBrowser } from "@angular/common";
-import { methodType } from "./types";
+import { type MethodType } from "./types";
+import { type MementoConfig } from "./types/memento-config.type";
+
+interface ICachingDataGET {
+  path: string;
+  method: MethodType;
+  params?: any;
+  headers?: any;
+  body?: any;
+}
+
+interface ICachingDataSET extends ICachingDataGET {
+  response: HttpResponse<any>;
+}
 
 @Injectable({
   providedIn: "root",
 })
 export class NgMementoService {
-  #caches: ICache[];
+  #caches: ICacheStore[];
 
   constructor(
-    @Inject(PLATFORM_ID) private platformId: any,
-    @Inject(MEMENTO_CONFIG) private readonly config: IMementoConfig
+    @Inject(PLATFORM_ID) private readonly platformId: any,
+    @Inject(MEMENTO_CONFIG) private readonly configs: MementoConfig[]
   ) {
-    if (!this.config.store || !isPlatformBrowser(this.platformId)) {
-      this.config.store = "none";
+    if (!isPlatformBrowser(this.platformId)) {
+      this.configs.forEach((config) => (config.store = "none"));
     }
-
-    if (!this.config.storeKey) {
-      this.config.storeKey = KEYS.STORE;
-    }
-
-    this.#caches = getCacheData(config);
+    this.#caches = getCacheData(this.configs);
   }
 
-  #delete = (index: number) => {
+  #delete = (index: number, cache: ICacheStore) => {
+    const { store, storeKey } = cache;
     this.#caches.splice(index, 1);
-    deleteCacheData(this.config);
+    setCacheData({ store, storeKey }, this.#caches);
   };
 
-  get = (cachingData: {
-    path: string;
-    method: methodType;
-    params?: any;
-    headers?: any;
-    body?: any;
-  }): HttpResponse<any> | undefined => {
+  get = (cachingData: ICachingDataGET): HttpResponse<any> | undefined => {
     const cacheIndex: number = findCacheIndex(this.#caches, cachingData);
 
     if (cacheIndex === -1) {
       return undefined;
     }
-    const cache: ICache = this.#caches[cacheIndex];
+    const cache: ICacheStore = this.#caches[cacheIndex];
     const isExpired: boolean = Date.now() > cache.expiredDate;
     if (isExpired) {
-      this.#delete(cacheIndex);
+      this.#delete(cacheIndex, cache);
       return undefined;
     }
     return cache.response;
   };
 
-  set = (cachingData: {
-    body?: any;
-    headers?: any;
-    params?: any;
-    path: string;
-    method: methodType;
-    response: HttpResponse<any>;
-  }) => {
-    const { expireTimeAsMilliSeconds } = this.config;
-    const expiredDate: number = Date.now() + expireTimeAsMilliSeconds;
-    const cache: ICache = {
-      ...cachingData,
-      expiredDate,
-    };
-    this.#caches = [...this.#caches, cache];
-    if (this.config.store === "none" || !isPlatformBrowser(this.platformId)) {
+  set = (cachingData: ICachingDataSET) => {
+    const { path } = cachingData;
+
+    const config: MementoConfig | undefined = this.configs.find(
+      (config) => config.path === path
+    );
+
+    if (!config) {
       return;
     }
-    setCacheData(this.config, this.#caches);
+
+    const { expireTimeAsMilliSeconds, store, storeKey } = config;
+
+    const expiredDate: number = Date.now() + expireTimeAsMilliSeconds;
+
+    const cache: ICacheStore = {
+      ...cachingData,
+      expiredDate,
+      store,
+      storeKey,
+    };
+    this.#caches = [...this.#caches, cache];
+
+    if (store === "none" || !isPlatformBrowser(this.platformId)) {
+      return;
+    }
+
+    setCacheData({ store, storeKey }, this.#caches);
   };
 }
