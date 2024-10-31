@@ -37,17 +37,32 @@ The application was built by using this library. [Visit](https://ng-memento-web.
 import { NgMementoModule, IMementoConfig } from "ng-memento";
 
 const config: IMementoConfig = {
-  expireTimeAsMilliSeconds: 60 * 60 * 1000,
+  expireTimeAsMilliSeconds: 60 * 60 * 1000, // an hour
   store: 'local',
-  storeKey: 'MEMENTO_KEY'
+  storeKey: 'MEMENTO_KEY',
   paths: [
     {
-      method: ["GET", "POST"],
-      path: "users/*",
+      methods: ["GET"],
+      path: "comments/*",
+      store: "session",
     },
     {
-      method: ["GET"],
+      methods: ["GET", "POST"],
+      path: "users/1",
+      storeKey: "MEMENTO_USERS",
+      expireTimeAsMilliSeconds: 24 * 60 * 60 * 1000, // a day
+
+    },
+    {
+      methods: ["GET", "POST"],
+      path: "users/2",
+      storeKey: "MEMENTO_USERS",
+      expireTimeAsMilliSeconds: 24 * 60 * 60 * 1000, // a day
+    },
+    {
+      methods: ["GET"],
       path: "posts",
+      store: "none",
     },
   ],
 };
@@ -81,24 +96,27 @@ export const appConfig: ApplicationConfig = {
 
 | property                   | type                       | default       | required | description                                            |
 | :------------------------- | :------------------------- | :------------ | :------- | :----------------------------------------------------- |
-| `expireTimeAsMilliSeconds` | `number`                   |               | ✓        | cached data stored time                                |
-| `paths`                    | `IMethodPath`              |               | ✓        |
+| `expireTimeAsMilliSeconds` | `number`                   | 0             | x        | cached data stored time                                |
+| `paths`                    | `IMethodPath`              |               | ✓        |                                                        |
 | `store`                    | `none`, `local`, `session` | `none`        | x        | none: cached data stored lives only until next refresh |
 | `storeKey`                 | `string`                   | `MEMENTO_KEY` | x        | key that stores data if chose local or session         |
 
 #### IMethodPath
 
-| property  | type         | default | required | description                                                                  |
-| :-------- | :----------- | :------ | :------- | :--------------------------------------------------------------------------- |
-| `methods` | `methodType` |         | ✓        | methods to be cached                                                         |
-| `path`    | `string`     |         | ✓        | path to be cached **(if path ends with '/\*' all sub paths will be cached)** |
+| property                   | type                       | default      | required | description                                                                  |
+| :------------------------- | :------------------------- | :----------- | :------- | :--------------------------------------------------------------------------- |
+| `methods`                  | `MethodType`               |              | ✓        | methods to be cached                                                         |
+| `path`                     | `string`                   |              | ✓        | path to be cached **(if path ends with '/\*' all sub paths will be cached)** |
+| `expireTimeAsMilliSeconds` | `number`                   | parent value | x        | cached data stored time                                                      |
+| `store`                    | `none`, `local`, `session` | parent value | x        | none: cached data stored lives only until next refresh                       |
+| `storeKey`                 | `string`                   | parent value | x        | key that stores data if chose local or session                               |
 
-#### methodType
+#### MethodType
 
 | property     | type                            | default | required | description          |
 | :----------- | :------------------------------ | :------ | :------- | :------------------- |
-| `methodType` | `"GET", "POST", "PUT", "PATCH"` |         | ✓        | methods to be cached |
+| `MethodType` | `"GET", "POST", "PUT", "PATCH"` |         | ✓        | methods to be cached |
 
 ### Important
 
-**You should use methodType carefully. You send same header, body, params and path when you use POST, PUT and PATCH method, ng-memento will prevent the request therefore the data will not affect.**
+**You should use MethodType carefully. You send same header, body, params and path when you use POST, PUT and PATCH method, ng-memento will prevent the request therefore the data will not affect.**

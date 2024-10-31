@@ -1,1 +1,1 @@
-export type methodType = "GET" | "POST" | "PUT" | "PATCH";
+export type MethodType = "GET" | "POST" | "PUT" | "PATCH";
