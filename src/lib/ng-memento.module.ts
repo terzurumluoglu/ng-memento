@@ -17,11 +17,16 @@ import { KEYS } from "./enums";
 })
 export class NgMementoModule {
   private static prepareConfig = (config: IMementoConfig): MementoConfig[] => {
-    const expireTimeAsMilliSeconds = config.expireTimeAsMilliSeconds || 0;
     const store: StoreType = config.store || "none";
     const storeKey: string = config.storeKey || KEYS.STORE;
 
-    const { paths } = config;
+    const { expireTimeAsMilliSeconds, paths } = config;
+
+    if (!expireTimeAsMilliSeconds && expireTimeAsMilliSeconds !== 0) {
+      throw new Error(
+        "Cannot read property of IMementoConfig: 'expireTimeAsMilliSeconds'"
+      );
+    }
 
     if (!paths) {
       throw new Error("Cannot read property of IMementoConfig: 'paths'");
