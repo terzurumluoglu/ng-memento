@@ -42,22 +42,27 @@ const config: IMementoConfig = {
   storeKey: 'MEMENTO_KEY',
   paths: [
     {
-      methods: ["GET"],
+      methods: ["GET", "POST"],
       path: "comments/*",
       store: "session",
     },
     {
-      methods: ["GET", "POST"],
+      methods: ["GET"],
       path: "users/1",
-      storeKey: "MEMENTO_USERS",
+      storeKey: "MEMENTO_USERS_2",
       expireTimeAsMilliSeconds: 24 * 60 * 60 * 1000, // a day
 
     },
     {
-      methods: ["GET", "POST"],
+      methods: ["GET"],
       path: "users/2",
-      storeKey: "MEMENTO_USERS",
+      storeKey: "MEMENTO_USERS_2",
       expireTimeAsMilliSeconds: 24 * 60 * 60 * 1000, // a day
+    },
+    {
+      methods: ["GET"],
+      path: "users/*",
+      storeKey: "MEMENTO_USERS",
     },
     {
       methods: ["GET"],
@@ -96,7 +101,7 @@ export const appConfig: ApplicationConfig = {
 
 | property                   | type                       | default       | required | description                                            |
 | :------------------------- | :------------------------- | :------------ | :------- | :----------------------------------------------------- |
-| `expireTimeAsMilliSeconds` | `number`                   | 0             | x        | cached data stored time                                |
+| `expireTimeAsMilliSeconds` | `number`                   |               | ✓        | cached data stored time                                |
 | `paths`                    | `IMethodPath`              |               | ✓        |                                                        |
 | `store`                    | `none`, `local`, `session` | `none`        | x        | none: cached data stored lives only until next refresh |
 | `storeKey`                 | `string`                   | `MEMENTO_KEY` | x        | key that stores data if chose local or session         |
