@@ -16,7 +16,8 @@
     "angular",
     "caching",
     "restful",
-    "faster application"
+    "http",
+    "request"
   ],
   "peerDependencies": {
     "@angular/common": "^13.3.0",
