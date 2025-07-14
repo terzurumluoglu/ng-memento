@@ -29,6 +29,7 @@ The application was built by using this library. [Visit](https://ng-memento-web.
 | `v17.x.x`       | `v7.x.x`           |
 | `v18.x.x`       | `v8.x.x`           |
 | `v19.x.x`       | `v9.x.x`           |
+| `v20.x.x`       | `v10.x.x`          |
 
 ## Documentation
 
