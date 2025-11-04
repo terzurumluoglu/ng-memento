@@ -1,6 +1,6 @@
 {
   "name": "ng-memento",
-  "version": "8.1.1",
+  "version": "10.1.2",
   "description": "NG-MEMENTO makes your application to be faster by preventing the same http requests from being called again in your Angular project.",
   "author": "Toprak ERZURUMLUOĞLU <toprakerzurumluoglu@gmail.com>",
   "license": "MIT",
@@ -16,11 +16,12 @@
     "angular",
     "caching",
     "restful",
-    "faster application"
+    "http",
+    "request"
   ],
   "peerDependencies": {
-    "@angular/common": "^18.2.0",
-    "@angular/core": "^18.2.0"
+    "@angular/common": "^20.1.0",
+    "@angular/core": "^20.1.0"
   },
   "dependencies": {
     "tslib": "^2.3.0"
